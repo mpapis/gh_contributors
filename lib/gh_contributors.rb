@@ -15,7 +15,7 @@ require 'multi_json'
 require 'open-uri'
 
 class GhContributors
-  DEFAULT_URL_FORMAT = %q{%Q{<a href="#{data['url']}" title="#{login} - #{data['contributions']}"><img src="#{data['avatar_url']}" alt="#{login} - #{data['contributions']}"/></a>}}
+  DEFAULT_URL_FORMAT = %q{%Q{<a href="#{data['html_url']}" title="#{login} - #{data['contributions']}"><img src="#{data['avatar_url']}" alt="#{login} - #{data['contributions']}"/></a>}}
   DEFAULT_SEARCH  = /<span class="contributors">.*?<\/span>/m
   DEFAULT_REPLACE = %q{%Q{<span class="contributors">\n#{@data.join("\n")}\n</span>}}
 
@@ -25,6 +25,7 @@ class GhContributors
   def self.for_org(name)
     GhContributors.new.for_org(name)
   end
+  
   def for_org(name)
     @data = load_json(url_builder("orgs/#{name}/repos")).map{ |repo|
       log "repository: #{name}/#{repo['name']}"
