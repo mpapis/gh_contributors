@@ -1,5 +1,5 @@
-source :rubygems
+source "https://rubygems.org"
+gemspec
 
 gem 'json', :platforms => [:jruby, :ruby_18]
-
-gemspec
+gem "json", :group => :development
