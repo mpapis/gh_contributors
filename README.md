@@ -44,3 +44,9 @@ run and pass on that implementation. When something breaks on your
 implementation, you will be responsible for providing patches in a timely
 fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
+
+## License
+Copyright (c) 2013 Michal Papis, Jordon Bedwell, Erik Michaels-Ober. See
+[LICENSE][] for details.
+
+[license]: LICENSE.md
