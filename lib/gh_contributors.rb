@@ -15,7 +15,7 @@ require 'multi_json'
 require 'open-uri'
 
 class GhContributors
-  DEFAULT_URL_FORMAT = %q{%Q{<a href="#{data['url']}" title="#{login} - #{data['contributions']}"><img src="#{data['avatar_url']}" alt="#{login} - #{data['contributions']}"/></a>}}
+  DEFAULT_URL_FORMAT = %q{%Q{<a href="#{data['html_url']}" title="#{login} - #{data['contributions']}"><img src="#{data['avatar_url']}" alt="#{login} - #{data['contributions']}"/></a>}}
   DEFAULT_SEARCH  = /<span class="contributors">.*?<\/span>/m
   DEFAULT_REPLACE = %q{%Q{<span class="contributors">\n#{@data.join("\n")}\n</span>}}
 
@@ -39,6 +39,7 @@ class GhContributors
   def self.for_repo(name)
     GhContributors.new.for_repo(name)
   end
+
   def for_repo(name)
     log "repository: #{name}"
     @data = load_json(url_builder("repos/#{name}/contributors"))
@@ -80,17 +81,23 @@ class GhContributors
 
   # group data, calculate contributions, sort by contributions
   def calculate
-    @data = @data.group_by {|contributor|
+    @data = @data.group_by { |contributor|
       contributor['login']
     }.map {|login, data|
       [login, {
         'avatar_url'    => data.first['avatar_url'],
-        'url'           => data.first['html_url'],
+        'name'          => login,
+        'url'           => data.first['url'],
+        'html_url'      => profile_url(login),
         'contributions' => data.map{|repo| repo['contributions'].to_i}.inject(&:+)
       }]
     }.sort_by{|login, data|
       [1000000/data['contributions'], login]
     }
+  end
+
+  def profile_url(username)
+    "https://github.com/#{username}"
   end
 
   # Build full path to resource to use
