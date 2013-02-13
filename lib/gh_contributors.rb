@@ -11,7 +11,7 @@
 #     GhContributors.for_repo('railsisntaller/website').to_urls.update_files('public/index.html', 'public/contributors.html')
 #
 
-require 'json'
+require 'multi_json'
 require 'open-uri'
 
 class GhContributors
