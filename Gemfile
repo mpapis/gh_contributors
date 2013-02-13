@@ -6,6 +6,7 @@ group :development do
 end
 
 group :test do
+  gem "fakeweb", :require => false
   gem "mocha", :require => false
   gem "simplecov", :require => false, :platforms => [:ruby_19]
 end
