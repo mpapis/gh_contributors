@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/mpapis/gh_contributors.png?branch=master)](https://travis-ci.org/mpapis/gh_contributors)
 # Github Contributors
 
 Update static files with github contributors list.
