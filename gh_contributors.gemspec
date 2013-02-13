@@ -14,5 +14,5 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("\n")
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
 
-  #s.add_development_dependency "smf-gem"
+  s.add_dependency "multi_json", "~> 1.6"
 end
