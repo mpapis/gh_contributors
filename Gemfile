@@ -7,6 +7,7 @@ end
 
 group :test do
   gem "webmock", :require => false
+  gem "pry", :require => false
   gem "mocha", :require => false
   gem "simplecov", :require => false, :platforms => [:ruby_19]
 end
