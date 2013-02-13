@@ -4,6 +4,7 @@ gemspec
 group :development do
   gem "json", :platforms => [:jruby, :ruby_18]
   gem "pry", :require => false
+  gem 'pry-debugger', :platforms => :mri_19
 end
 
 group :test do
