@@ -15,4 +15,5 @@ Gem::Specification.new do |s|
   s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
 
   s.add_dependency "multi_json", "~> 1.6"
+  s.add_development_dependency "bundler", "~> 1.0"
 end
