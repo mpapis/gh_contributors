@@ -1,0 +1,14 @@
+rvm:
+  - rbx-19mode
+  - 1.9.3
+  - 1.8.7
+  - jruby-19mode
+  - jruby-18mode
+
+notifications:
+  recipients:
+    - mpapis@gmail.com
+
+branches:
+  only:
+    - master
