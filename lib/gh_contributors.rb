@@ -25,6 +25,7 @@ class GhContributors
   def self.for_org(name)
     GhContributors.new.for_org(name)
   end
+  
   def for_org(name)
     @data = load_json(url_builder("orgs/#{name}/repos")).map{ |repo|
       log "repository: #{name}/#{repo['name']}"
