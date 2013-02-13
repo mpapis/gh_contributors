@@ -7,7 +7,8 @@ class UrlLoadTest < Test::Unit::TestCase
   end
 
   def test_url_builder
-    assert_equal('https://api.github.com/test/me', @ghc.send(:url_builder, 'test/me'))
+    assert_equal(
+      'https://api.github.com/test/me', @ghc.send(:url_builder, 'test/me'))
   end
 
   def test_load_json_basic
