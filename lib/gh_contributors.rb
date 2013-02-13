@@ -19,6 +19,11 @@ class GhContributors
   DEFAULT_SEARCH  = /<span class="contributors">.*?<\/span>/m
   DEFAULT_REPLACE = %q{%Q{<span class="contributors">\n#{@data.join("\n")}\n</span>}}
 
+  @logger = $stdout
+  class << self
+    attr_accessor :logger
+  end
+
   attr_reader :data
 
   # for_org('railsinstaller')
@@ -118,7 +123,7 @@ class GhContributors
     File.open(file, 'w') { |f| f.write(text) }
   end
 
-  def log(text)
-    puts text
+  def log(text, logger = self.class.logger)
+    logger.respond_to?(:info) ? logger.info(text) : logger.puts(text)
   end
 end
