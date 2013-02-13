@@ -99,7 +99,7 @@ class GhContributors
 
   # Load json from url
   def load_json(url)
-    open(url){ |json| JSON.load(json) }
+    open(url){ |json| JSON.parse(json) }
   end
 
   # Allow editing file text in a block
