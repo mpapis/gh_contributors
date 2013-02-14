@@ -27,7 +27,7 @@ class GhContributors
     attr_accessor :logger
     attr_reader   :user_details
     def user_details=(user_details)
-      UserData.validate!(user_details)
+      UserData.first!(user_details)
       @user_details = user_details
     end
   end
