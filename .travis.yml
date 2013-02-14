@@ -13,4 +13,4 @@ branches:
   only:
     - master
 
-install: time bundle install
+install: time bundle install --without development
