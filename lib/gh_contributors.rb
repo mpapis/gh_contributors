@@ -19,9 +19,21 @@ class GhContributors
   DEFAULT_SEARCH  = /<span class="contributors">.*?<\/span>/m
   DEFAULT_REPLACE = %q{%Q{<span class="contributors">\n#{@data.join("\n")}\n</span>}}
 
+  class UnknownUserDetail < Exception
+  end
+
   @logger = $stdout
+  @user_details = :simple
   class << self
     attr_accessor :logger
+    attr_reader   :user_details
+    def user_details_validate!
+      raise UnknownUserDetail.new("Unknown user_details: #{@user_details}") unless [:simple, :fetch].include?(@user_details)
+    end
+    def user_details=(user_details)
+      @user_details = user_details
+      user_details_validate!
+    end
   end
 
   attr_reader :data
@@ -85,17 +97,32 @@ class GhContributors
   private
 
   # group data, calculate contributions, sort by contributions
+  def calculate_user_data_simple(login, data)
+    {
+      'avatar_url'    => data.first['avatar_url'],
+      'name'          => login,
+      'url'           => data.first['url'],
+      'html_url'      => profile_url(login),
+      'contributions' => data.map{|repo| repo['contributions'].to_i}.inject(&:+)
+    }
+  end
+
+  def calculate_user_data_fetch(login, data)
+    user_data = load_json(data.first['url'])
+    user_data['contributions'] = data.map{|repo| repo['contributions'].to_i}.inject(&:+)
+    user_data
+  end
+
+  def calculate_user_data(login, data)
+    self.class.user_details_validate!
+    send("calculate_user_data_#{self.class.user_details}".to_sym, login, data)
+  end
+
   def calculate
     @data = @data.group_by { |contributor|
       contributor['login']
     }.map {|login, data|
-      [login, {
-        'avatar_url'    => data.first['avatar_url'],
-        'name'          => login,
-        'url'           => data.first['url'],
-        'html_url'      => profile_url(login),
-        'contributions' => data.map{|repo| repo['contributions'].to_i}.inject(&:+)
-      }]
+      [login, calculate_user_data(login, data)]
     }.sort_by{|login, data|
       [1000000/data['contributions'], login]
     }
