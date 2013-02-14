@@ -2,9 +2,11 @@
 
 [![Build Status](https://travis-ci.org/mpapis/gh_contributors.png?branch=master)][travis]
 [![Code Climate](https://codeclimate.com/github/mpapis/gh_contributors.png)][codeclimate]
+[![Dependency Status](https://gemnasium.com/mpapis/gh_contributors.png)][gemnasium]
 
 [travis]: https://travis-ci.org/mpapis/gh_contributors
 [codeclimate]: https://codeclimate.com/github/mpapis/gh_contributors
+[gemnasium]: https://gemnasium.com/mpapis/gh_contributors
 
 Update static files with github contributors list.
 
