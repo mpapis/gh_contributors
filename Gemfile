@@ -2,6 +2,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "rake"
+gem "pluginator"
 
 group :development do
   gem "json", :platforms => [:jruby, :ruby_18]
