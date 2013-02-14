@@ -1,7 +1,6 @@
-#!/usr/bin/env ruby
 # -*- encoding: utf-8 -*-
 
-Kernel.load File.expand_path("../lib/gh_contributors/version.rb", __FILE__)
+require File.expand_path("../lib/gh_contributors/version.rb", __FILE__)
 
 Gem::Specification.new do |spec|
   spec.name        = "gh_contributors"
@@ -16,6 +15,4 @@ Gem::Specification.new do |spec|
   spec.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
 
   spec.add_dependency "multi_json", "~> 1.6"
-  spec.add_development_dependency "bundler", "~> 1.0"
-  spec.add_development_dependency "rake", "~> 10.0"
 end
