@@ -13,4 +13,4 @@ branches:
   only:
     - master
 
-install: time bundle install --without development --no-cache --no-prune
+install: time bundle install --without development --local || time bundle install --without development --no-cache --no-prune
