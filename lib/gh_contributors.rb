@@ -87,8 +87,8 @@ class GhContributors
           t = yield t, @data, f
         else
           t.sub(
-            options.fetch(:search, DEFAULT_SEARCH),
-            eval(options.fetch(:replace, DEFAULT_REPLACE))
+            opts.fetch(:search, DEFAULT_SEARCH),
+            eval(opts.fetch(:replace, DEFAULT_REPLACE))
           )
         end
       end
