@@ -14,5 +14,5 @@ group :test do
   gem "rspec"
   gem "mocha"
   gem "webmock"
-  gem "simplecov", require => false, :platforms => [:ruby_19]
+  gem "simplecov", :require => false, :platforms => [:ruby_19]
 end
