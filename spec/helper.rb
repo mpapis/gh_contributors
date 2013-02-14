@@ -9,9 +9,13 @@ require 'gh_contributors'
 require 'rspec'
 require 'webmock/rspec'
 
-RSpec.configure do |config|
-  config.expect_with :rspec do |c|
+RSpec.configure do |c|
+  c.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  c.before(:each) do
+    GhContributors.any_instance.stub(:log).and_return(StringIO.new)
   end
 end
 
