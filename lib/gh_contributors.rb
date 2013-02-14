@@ -114,15 +114,14 @@ class GhContributors
 
   def calculate_user_data(login, data)
     self.class.user_details_validate!
-    user_data = send("calculate_user_data_#{self.class.user_details}".to_sym, login, data)
-    log "user: #{login} - #{user_data['contributions']}"
-    user_data
+    send("calculate_user_data_#{self.class.user_details}".to_sym, login, data)
   end
 
   def calculate
     @data = @data.group_by { |contributor|
       contributor['login']
     }.map {|login, data|
+      log "user: #{login}"
       [login, calculate_user_data(login, data)]
     }.sort_by{|login, data|
       [1000000/data['contributions'], login]
