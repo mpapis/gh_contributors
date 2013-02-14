@@ -12,3 +12,5 @@ notifications:
 branches:
   only:
     - master
+
+install: time bundle install
