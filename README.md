@@ -1,8 +1,10 @@
 # Github Contributors
 
 [![Build Status](https://travis-ci.org/mpapis/gh_contributors.png?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/github/mpapis/gh_contributors.png)][codeclimate]
 
 [travis]: https://travis-ci.org/mpapis/gh_contributors
+[codeclimate]: https://codeclimate.com/github/mpapis/gh_contributors
 
 Update static files with github contributors list.
 
