@@ -8,6 +8,7 @@ group :development do
 end
 
 group :test do
+  gem "rake"
   gem "mocha", :require => false
   gem "rspec"
   gem "simplecov", :require => false, :platforms => [:ruby_19]
