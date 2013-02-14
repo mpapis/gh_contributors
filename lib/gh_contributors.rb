@@ -66,7 +66,6 @@ class GhContributors
 
   def to_urls(format=GhContributors::DEFAULT_URL_FORMAT)
     @data.map! {|login, data|
-      log "user: #{login} - #{data['contributions']}"
       if block_given?
         yield login, data
       else
@@ -115,7 +114,9 @@ class GhContributors
 
   def calculate_user_data(login, data)
     self.class.user_details_validate!
-    send("calculate_user_data_#{self.class.user_details}".to_sym, login, data)
+    user_data = send("calculate_user_data_#{self.class.user_details}".to_sym, login, data)
+    log "user: #{login} - #{user_data['contributions']}"
+    user_data
   end
 
   def calculate
