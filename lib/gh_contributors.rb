@@ -12,13 +12,10 @@
 #
 
 require 'gh_contributors/json_helper'
+require 'gh_contributors/formatter'
 require 'gh_contributors/user_data'
 
 class GhContributors
-  DEFAULT_URL_FORMAT = %q{%Q{<a href="#{data['html_url']}" title="#{login} - #{data['contributions']}"><img src="#{data['avatar_url']}" alt="#{login} - #{data['contributions']}"/></a>}}
-  DEFAULT_SEARCH  = /<span class="contributors">.*?<\/span>/m
-  DEFAULT_REPLACE = %q{%Q{<span class="contributors">\n#{@data.join("\n")}\n</span>}}
-
   include JsonHelper
 
   @logger = $stdout
@@ -29,6 +26,12 @@ class GhContributors
     def user_details=(user_details)
       UserData.first!(user_details)
       @user_details = user_details
+    end
+    def formatter
+      @formatter ||= Formatter.first!(:html).new
+    end
+    def formatter=(format)
+      @formatter = Formatter.first!(format).new
     end
   end
 
@@ -60,29 +63,28 @@ class GhContributors
     self
   end
 
-  def to_urls(format=GhContributors::DEFAULT_URL_FORMAT)
-    @data.map! {|login, data|
+  def to_urls
+    @data.map! do |login, data|
       if block_given?
         yield login, data
       else
-        eval format
+        formatter.format(:html, login, data)
       end
-    }
+    end
     self
   end
 
   def update_files(files)
     opts = Hash === files.last ? files.pop : {}
+    formatter.search  = opts[:search]  if opts[:search]
+    formatter.replace = opts[:replace] if opts[:replace]
 
     files.flatten.each do |file|
       update_file(file) do |text|
         if block_given?
           text = yield text, @data, file
         else
-          text.sub(
-            opts.fetch(:search, DEFAULT_SEARCH),
-            eval(opts.fetch(:replace, DEFAULT_REPLACE))
-          )
+          formater.replace(text, @data, file)
         end
       end
     end
