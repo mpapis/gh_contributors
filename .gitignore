@@ -1,4 +1,5 @@
 /coverage
+!/vendor
 /.rvmrc
 /*.gem
 /Gemfile.lock
