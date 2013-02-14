@@ -30,6 +30,7 @@ class GhContributors
     def user_details_validate!
       raise UnknownUserDetail.new("Unknown user_details: #{@user_details}") unless [:simple, :fetch].include?(@user_details)
     end
+
     def user_details=(user_details)
       @user_details = user_details
       user_details_validate!
@@ -75,22 +76,25 @@ class GhContributors
     self
   end
 
-  def update_files(*files)
-    options = files.last.kind_of?(Hash) ? files.pop : {}
-    options[:search]  ||= DEFAULT_SEARCH
-    options[:replace] ||= DEFAULT_REPLACE
-    files = files.first if files.first.kind_of? Array
-    files.each do |file|
+  def update_files(files)
+    opts = Hash === files.last ? files.pop : {}
+
+    files.flatten.each do |f|
       log "file: #{file}"
-      update_file(file) do |text|
+
+      update_file(f) do |t|
         if block_given?
-          text = yield text, @data, file
+          t = yield t, @data, f
         else
-          text.sub(options[:search], eval(options[:replace]))
+          t.sub(
+            options.fetch(:search, DEFAULT_SEARCH),
+            eval(options.fetch(:replace, DEFAULT_REPLACE))
+          )
         end
       end
     end
-    self
+
+  self
   end
 
   private
