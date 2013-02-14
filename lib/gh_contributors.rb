@@ -74,14 +74,12 @@ class GhContributors
   def update_files(files)
     opts = Hash === files.last ? files.pop : {}
 
-    files.flatten.each do |f|
-      log "file: #{file}"
-
-      update_file(f) do |t|
+    files.flatten.each do |file|
+      update_file(file) do |text|
         if block_given?
-          t = yield t, @data, f
+          text = yield text, @data, file
         else
-          t.sub(
+          text.sub(
             opts.fetch(:search, DEFAULT_SEARCH),
             eval(opts.fetch(:replace, DEFAULT_REPLACE))
           )
@@ -113,6 +111,7 @@ class GhContributors
   # Allow editing file text in a block
   # Example: update_file('some.txt'){|text| text.gsub(/bla/,'ble')}
   def update_file(file)
+    log "file: #{file}"
     text = File.read(file)
     text = yield text
     File.open(file, 'w') { |f| f.write(text) }
