@@ -1,4 +1,4 @@
-shared_examples_for 'for_org' do |object|
+shared_examples_for 'load' do |object|
 
   before do
     stub_gh_get("/orgs/railsinstaller/repos").

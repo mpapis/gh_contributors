@@ -1,15 +1,8 @@
 rvm:
   - 2.0.0
-  - 1.9.3
-  - jruby-19mode
-  - rbx-19mode
 
 notifications:
   recipients:
     - mpapis@gmail.com
-
-branches:
-  only:
-    - master
 
 install: time bundle install --without development --local || time bundle install --without development --no-cache --no-prune

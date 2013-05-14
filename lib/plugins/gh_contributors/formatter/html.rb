@@ -1,25 +1,14 @@
-class GhContributors
-  class Fomratter
-    class Html < Abstract
-      DEFAULT_URL_FORMAT = %q{%Q{<a href="#{data['html_url']}" title="#{login} - #{data['contributions']}"><img src="#{data['avatar_url']}" alt="#{login} - #{data['contributions']}"/></a>}}
-      DEFAULT_SEARCH  = /<span class="contributors">.*?<\/span>/m
-      DEFAULT_REPLACE = %q{%Q{<span class="contributors">\n#{data.join("\n")}\n</span>}}
+class GhContributors::Fomratter::Html
+  DEFAULT_TEMPLATE = %q{%Q{<a href="#{data['html_url']}" title="#{login} - #{data['contributions']}"><img src="#{data['avatar_url']}" alt="#{login} - #{data['contributions']}"/></a>}}
 
-      attr_accessor :url_format, :search, :replace
+  attr_accessor :template
 
-      def initialize
-        @url_format = DEFAULT_URL_FORMAT
-        @search     = DEFAULT_SEARCH
-        @replace    = DEFAULT_REPLACE
-      end
-
-      def format(login, data)
-        eval(@url_format)
-      end
-
-      def output(data, file)
-        eval(@replace)
-      end
-    end
+  def initialize(options)
+    @template = options[:template] || DEFAULT_TEMPLATE
   end
+
+  def format(login, data)
+    eval(template)
+  end
+
 end

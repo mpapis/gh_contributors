@@ -1,7 +1,7 @@
-require 'multi_json'
+require 'json'
 require 'open-uri'
 
-class GhContributors
+module GhContributors
   module JsonHelper
     # Build full path to resource to use
     def url_builder(path)
@@ -10,7 +10,7 @@ class GhContributors
 
     # Load json from url
     def load_json(url)
-      open(url){ |json| MultiJson.load(json) }
+      open(url){ |json| Json.load(json) }
     end
   end
 end

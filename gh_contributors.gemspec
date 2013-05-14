@@ -14,7 +14,8 @@ Gem::Specification.new do |spec|
   spec.files       = `git ls-files`.split("\n")
   spec.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
 
-  spec.add_dependency "multi_json", "~> 1.6"
-  spec.add_dependency "pluginator", "> 0.10.1"
+  spec.add_dependency "multi_json", "> 1.7"
+  spec.add_dependency "pluginator", "> 0.10"
+
   spec.add_development_dependency "rake"
 end

@@ -1,4 +1,3 @@
-#/usr/bin/env ruby
-class GhContributors
-  VERSION = "0.8.0"
+module GhContributors
+  VERSION = "0.9.0"
 end
